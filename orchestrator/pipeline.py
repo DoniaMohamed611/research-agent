@@ -1,9 +1,16 @@
 import json
-from llm.client import ask_llm, load_rules
+from llm.client import ask_llm, ask_llm_cloud, load_rules
 
 
-def analyze_query(question):
+def get_llm_function(backend):
+    if backend == "cloud":
+        return ask_llm_cloud
+    return ask_llm
+
+
+def analyze_query(question, backend="local"):
     rules = load_rules("query_analysis.md")
+    llm = get_llm_function(backend)
 
     prompt = f"""{rules}
 
@@ -13,7 +20,7 @@ def analyze_query(question):
 Now output the search queries as JSON, following the format above.
 """
 
-    raw_reply = ask_llm(prompt, temperature=0.1)
+    raw_reply = llm(prompt, temperature=0.1)
 
     if raw_reply is None:
         print("LLM call failed. Using original question instead.")
@@ -31,8 +38,9 @@ Now output the search queries as JSON, following the format above.
         return [question]
 
 
-def make_decision(question, evidence_text):
+def make_decision(question, evidence_text, backend="local"):
     rules = load_rules("decision.md")
+    llm = get_llm_function(backend)
 
     prompt = f"""{rules}
 
@@ -45,7 +53,7 @@ def make_decision(question, evidence_text):
 Now output your decision as JSON, following the format above.
 """
 
-    raw_reply = ask_llm(prompt, temperature=0.1)
+    raw_reply = llm(prompt, temperature=0.1)
 
     if raw_reply is None:
         print("LLM call failed. Finalizing with current evidence.")
@@ -60,8 +68,9 @@ Now output your decision as JSON, following the format above.
         return {"decision": "FINALIZE", "reason": "Fallback due to invalid JSON."}
 
 
-def generate_report(question, evidence_text, source_map):
+def generate_report(question, evidence_text, source_map, backend="local"):
     rules = load_rules("report.md")
+    llm = get_llm_function(backend)
 
     prompt = f"""{rules}
 
@@ -74,7 +83,7 @@ def generate_report(question, evidence_text, source_map):
 Now write the full report, following the structure above exactly.
 """
 
-    report_text = ask_llm(prompt, temperature=0.3)
+    report_text = llm(prompt, temperature=0.3)
 
     if report_text is None:
         report_text = "*(Report generation failed due to an LLM server error. Raw evidence is available below.)*\n\n" + evidence_text
