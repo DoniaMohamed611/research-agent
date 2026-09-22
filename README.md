@@ -26,25 +26,25 @@ The loop is bounded by several safety limits, so it never runs forever:
 ### Installation
 
 1. Clone this repository:
-
+```
 git clone https://github.com/DoniaMohamed611/research-agent.git
 cd research-agent
-
+```
 2. Create and activate a virtual environment:
-
+```
 python -m venv venv
 venv\Scripts\Activate.ps1
-
+```
 3. Install dependencies:
-
+```
 pip install -r requirements.txt
-
+```
 4. Start LM Studio, load the Qwen3 8B model, and start the local server (default: `http://127.0.0.1:1234`).
 
 5. Run the agent:
-
+```
 python main.py
-
+```
 6. When prompted, type your research question. The final report will be saved as `research_report.md`.
 
 
