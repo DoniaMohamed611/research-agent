@@ -21,7 +21,7 @@ The loop is bounded by several safety limits, so it never runs forever:
 ### Prerequisites
 - Python 3.10+
 - [LM Studio](https://lmstudio.ai/) with the Qwen3 8B model downloaded
-- No paid API keys required — everything runs locally except the web search itself
+- No paid API keys required everything runs locally except the web search itself
 
 ### Installation
 
