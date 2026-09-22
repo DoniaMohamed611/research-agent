@@ -30,17 +30,14 @@ The loop is bounded by several safety limits, so it never runs forever:
 git clone https://github.com/DoniaMohamed611/research-agent.git
 cd research-agent
 
-
 2. Create and activate a virtual environment:
 
 python -m venv venv
 venv\Scripts\Activate.ps1
 
-
 3. Install dependencies:
 
 pip install -r requirements.txt
-
 
 4. Start LM Studio, load the Qwen3 8B model, and start the local server (default: `http://127.0.0.1:1234`).
 
@@ -48,9 +45,7 @@ pip install -r requirements.txt
 
 python main.py
 
-
 6. When prompted, type your research question. The final report will be saved as `research_report.md`.
-
 
 
 ## Example
@@ -86,13 +81,11 @@ Security+, the Google Cybersecurity Certificate, and CompTIA Network+...
 - **Instructions are split into focused files, not one large prompt.** Each stage (query analysis, evidence evaluation, report writing) has its own dedicated instruction file, since smaller, focused prompts get followed more reliably by a local 8B model than one long combined instruction set.
 
 ## Known Limitations
-
 - Local LLM inference speed depends heavily on hardware a full research session can take 10-20+ minutes on a laptop GPU.
 - Search results come from DuckDuckGo (no API key required); result quality varies by topic.
 - No per-source reliability scoring yet (planned future improvement).
 
 ## Future Improvements
-
 - A graphical interface (in progress)
 - Per-source evidence scoring before the decision step
 - Support for swapping in different local or hosted LLMs
